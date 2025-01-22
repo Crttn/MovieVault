@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">MovieVault</string>
+
+
+    <!-- Login & Register -->
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="register_title">Registar Cuenta</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="repeat_password">Repertir Contraseña</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="register">Registrase</string>
+
+    <!-- Toasts -->
+    <string name="login_sucess">Error al iniciar sesión</string>
+    <string name="register_sucess">Usuario registrado con éxito</string>
+    <string name="login_error">Error al iniciar sesión</string>
+    <string name="register_error">Error al registrar el usuario</string>
+    <string name="home_toast">Opción 1 seleccionada</string>
+    <string name="list_toast">Opción 2 seleccionada</string>
+    <string name="cosa_toast">Opción 3 seleccionada</string>
+
+</resources>
