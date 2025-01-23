@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Editar título de la película -->
+    <EditText
+        android:id="@+id/edit_movie_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Título"
+        android:inputType="text" />
+
+    <!-- RatingBar para calificación de la película -->
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/edit_movie_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="0" />
+
+    <!-- Editar URL de la imagen -->
+    <EditText
+        android:id="@+id/edit_movie_image_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="URL de la imagen"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar" />
+</LinearLayout>

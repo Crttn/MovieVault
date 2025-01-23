@@ -30,21 +30,17 @@ class FragmentMovies : Fragment() {
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.movies_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        movieAdapter = MovieAdapter(movieList)
+        movieAdapter = MovieAdapter(movieList, ::deleteMovie, ::editMovie)  // Pasar las funciones
         recyclerView.adapter = movieAdapter
 
-        // Obtener el `userEmail` desde SharedPreferences
-        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
-        userEmail = sharedPreferences.getString("user_email", null)
-
-        if (userEmail.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "Error: No se encontró el email del usuario.", Toast.LENGTH_LONG).show()
-        }
-
-        val addMovieButton: Button = rootView.findViewById(R.id.add_button)
-        addMovieButton.setOnClickListener {
+        val btnAddMovie: Button = rootView.findViewById(R.id.add_button)
+        btnAddMovie.setOnClickListener {
             showMovieDialog(isEditing = false, movieItem = null)
         }
+
+
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        userEmail = sharedPreferences.getString("user_email", null)
 
         loadMovies()
 
@@ -52,9 +48,9 @@ class FragmentMovies : Fragment() {
     }
 
     private fun loadMovies() {
+
         if (!userEmail.isNullOrEmpty()) {
             val movies = movieDatabaseHelper.getMoviesForUser(userEmail!!)
-
             if (movies.isNotEmpty()) {
                 movieList.clear()
                 movieList.addAll(movies)
@@ -71,6 +67,19 @@ class FragmentMovies : Fragment() {
         if (isAdded && !requireActivity().isFinishing) {
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun editMovie(movieItem: MovieItem) {
+        showMovieDialog(isEditing = true, movieItem = movieItem)
+    }
+
+
+
+    private fun deleteMovie(movieItem: MovieItem, position: Int) {
+        movieDatabaseHelper.deleteMovie(movieItem.id)
+        movieList.removeAt(position)
+        movieAdapter.notifyItemRemoved(position)
+        showToastSafe("Película eliminada")
     }
 
     private fun showMovieDialog(isEditing: Boolean, movieItem: MovieItem?) {
@@ -106,9 +115,10 @@ class FragmentMovies : Fragment() {
                                 movieList[position] = MovieItem(movieItem.id, title, rankInt, image)
                                 movieAdapter.notifyItemChanged(position)
                             } else {
-                                movieDatabaseHelper.insertMovie(title, image, rankInt, userEmail ?: "")
+                                val newMovieId = movieDatabaseHelper.insertMovie(title, image, rankInt, userEmail ?: "")
                                 showToastSafe("Película guardada")
-                                loadMovies()
+                                movieList.add(MovieItem(newMovieId.toInt(), title, rankInt, image))
+                                movieAdapter.notifyItemInserted(movieList.size - 1)
                             }
                         } else {
                             showToastSafe("Clasificación debe ser entre 1 y 10")
@@ -126,10 +136,4 @@ class FragmentMovies : Fragment() {
         dialog.show()
     }
 
-    private fun deleteMovie(movieItem: MovieItem, position: Int) {
-        movieDatabaseHelper.deleteMovie(movieItem.id)
-        movieList.removeAt(position)
-        movieAdapter.notifyItemRemoved(position)
-        showToastSafe("Película eliminada")
-    }
 }

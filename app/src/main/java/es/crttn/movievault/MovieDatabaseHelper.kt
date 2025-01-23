@@ -82,7 +82,7 @@ class MovieDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
     }
 
     // Método para insertar una nueva película con transacción
-    fun insertMovie(title: String, image: String, rank: Int, userEmail: String) {
+    fun insertMovie(title: String, image: String, rank: Int, userEmail: String): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
             put(COLUMN_TITLE, title)
@@ -91,16 +91,21 @@ class MovieDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
             put(COLUMN_USER_EMAIL, userEmail)
         }
 
+        var newMovieId: Long = -1
+
         try {
             db.beginTransaction()
-            db.insert(TABLE_MOVIES, null, values)
-            db.setTransactionSuccessful()  // Confirmar la transacción
+            newMovieId = db.insert(TABLE_MOVIES, null, values)
+            db.setTransactionSuccessful()
         } catch (e: Exception) {
             Log.e("MovieDatabaseHelper", "Error al insertar película: ${e.message}")
         } finally {
-            db.endTransaction()  // Finalizar la transacción
+            db.endTransaction()
         }
+
+        return newMovieId
     }
+
 
     // Método para actualizar una película con transacción
     fun updateMovie(id: Int, title: String, image: String, rank: Int) {
