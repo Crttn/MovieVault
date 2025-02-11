@@ -73,8 +73,6 @@ class FragmentMovies : Fragment() {
         showMovieDialog(isEditing = true, movieItem = movieItem)
     }
 
-
-
     private fun deleteMovie(movieItem: MovieItem, position: Int) {
         movieDatabaseHelper.deleteMovie(movieItem.id)
         movieList.removeAt(position)

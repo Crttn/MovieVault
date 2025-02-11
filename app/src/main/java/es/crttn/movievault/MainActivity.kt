@@ -2,7 +2,7 @@ package es.crttn.movievault
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,9 +31,12 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.main)
         navigationView = findViewById(R.id.navigation_view)
 
+        // Cargar el nombre del usuario en el Drawer
+        loadUserEmail()
+
         // Cargamos el fragmento de inicio en la actividad
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, FragmentHome())
+        transaction.add(R.id.fragment_container, FragmentMovies())
         transaction.commit()
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -42,19 +45,19 @@ class MainActivity : AppCompatActivity() {
                     // Acción al seleccionar "Home"
                     showToast(getString(R.string.home_toast))
                     // Reemplazamos el fragmento
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentHome()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentMovies()).commit()
                 }
                 R.id.nav_profile -> {
                     // Acción al seleccionar "Profile"
 //                    showToast(getString(R.string.list_toast))
                     // Reemplazamos el fragmento
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentMovies()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentRecorder()).commit()
                 }
                 R.id.nav_settings -> {
                     // Acción al seleccionar "Settings"
                     showToast(getString(R.string.cosa_toast))
                     // Reemplazamos el fragmento
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentRecorder()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FragmentUtils()).commit()
                 }
                 R.id.nav_logout -> {
                     // Acción al seleccionar "Cerrar sesión"
@@ -85,5 +88,24 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         finish()  // Finaliza la actividad principal para evitar que el usuario regrese
     }
+
+    private fun loadUserEmail() {
+        // Obtener SharedPreferences
+        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+
+        // Recuperar el correo del usuario (si no existe, poner un valor predeterminado)
+        val userEmail = sharedPreferences.getString("user_email", "Correo no disponible")  // Valor predeterminado
+
+        // Obtener el header del NavigationView
+        val headerView = navigationView.getHeaderView(0)
+
+        // Obtener el TextView donde se mostrará el correo
+        val userEmailTextView: TextView = headerView.findViewById(R.id.drawerheaderEmail)  // Asegúrate de que el ID sea correcto
+
+        // Establecer el texto del TextView con el correo del usuario
+        userEmailTextView.text = userEmail
+    }
+
+
 
 }

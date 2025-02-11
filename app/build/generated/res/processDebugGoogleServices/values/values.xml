@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">960560224229</string>
+    <string name="google_api_key" translatable="false">AIzaSyAmWCMlfP0Aw8PVgsikXY2NzomPAgWgZJ4</string>
+    <string name="google_app_id" translatable="false">1:960560224229:android:b91e69f57e370ae73f810c</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAmWCMlfP0Aw8PVgsikXY2NzomPAgWgZJ4</string>
+    <string name="google_storage_bucket" translatable="false">fir-taller-e4209.firebasestorage.app</string>
+    <string name="project_id" translatable="false">fir-taller-e4209</string>
+</resources>

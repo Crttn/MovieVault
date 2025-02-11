@@ -38,7 +38,6 @@ class MovieDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         onCreate(db)
     }
 
-    // Método para obtener las películas de un usuario específico
     fun getMoviesForUser(userEmail: String): List<MovieItem> {
         val movieList = mutableListOf<MovieItem>()
         val db = readableDatabase
@@ -81,7 +80,6 @@ class MovieDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         return movieList
     }
 
-    // Método para insertar una nueva película con transacción
     fun insertMovie(title: String, image: String, rank: Int, userEmail: String): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -106,8 +104,6 @@ class MovieDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         return newMovieId
     }
 
-
-    // Método para actualizar una película con transacción
     fun updateMovie(id: Int, title: String, image: String, rank: Int) {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -127,7 +123,6 @@ class MovieDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         }
     }
 
-    // Método para eliminar una película
     fun deleteMovie(id: Int) {
         val db = writableDatabase
 

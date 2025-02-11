@@ -48,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
             val repeatPassword = registerRepeatPassword.text.toString()
 
             // Verificar que las contraseñas coincidan y que los campos no estén vacíos
-            if (password == repeatPassword && checkEmpty(email, password, repeatPassword)) {
+            if (password == repeatPassword && (email.isNotEmpty() && password.isNotEmpty() && repeatPassword.isNotEmpty())) {
                 // Insertar el usuario en la base de datos SQLite
                 userDatabaseHelper.insertUser(email, password)
                 Toast.makeText(applicationContext, "Usuario Registrado con éxito", Toast.LENGTH_LONG).show()
@@ -75,8 +75,4 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    // Verificar si los campos de email y contraseña están vacíos
-    private fun checkEmpty(email: String, password: String, repeatPassword: String): Boolean {
-        return email.isNotEmpty() && password.isNotEmpty() && repeatPassword.isNotEmpty()
-    }
 }
